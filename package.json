@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-gh": "ng build --base-href https://m1z23r.github.io/i2m/",
+    "deploy-gh": "npx angular-cli-ghpages --dir=dist/graphs/browser",
+    "deploy": "yarn build-gh && yarn deploy-gh"
   },
   "private": true,
   "dependencies": {

@@ -39,7 +39,7 @@ import { GlowButtonComponent } from './components/glow-button/glow-button.compon
 export class AppComponent {
   chartType = ChartType.AnnotationChart;
   constructor(private excelService: ExcelService) {
-    interval(1000).subscribe(() => {
+    interval(10).subscribe(() => {
       if (this.isPlaying$()) {
         if (this.currentTimestampIndex$() < this.timestamps$().length - 1) {
           this.currentTimestampIndex$.update((c) => c + 1);
@@ -187,4 +187,14 @@ export class AppComponent {
     this.currentTimestampIndex$.set(+e.target.value);
     console.log(e);
   }
+
+  claasActive$ = computed(() => {
+    const re = (0.008 * this.currentAirFilterDelta$() + 0.1) * 5;
+
+    return {
+      green: re <= 2.1,
+      yellow: re < 2.7 && re > 2.1,
+      red: re < 2.7 && re > 2.7,
+    };
+  });
 }

@@ -6,7 +6,7 @@
 
   <div class="w-full h-10 border bg-[#eaeaea] relative rounded-sm">
     <div
-      class="absolute left-0 h-full transition-all ease-in-out duration-1000"
+      class="absolute left-0 h-full transition-all ease-in-out duration-100"
       [style.background]="dynamicColor$() ? color$() : '#00695C'"
       [style.width.%]="value$()"
     ></div>
@@ -25,7 +25,7 @@
   </h2>
   <div class="h-full w-10 border bg-[#eaeaea] relative rounded-sm">
     <div
-      class="absolute bottom-0 w-full transition-all ease-in-out duration-1000"
+      class="absolute bottom-0 w-full transition-all ease-in-out duration-100"
       [style.background]="dynamicColor$() ? color$() : '#00695C'"
       [style.height.%]="(value$() / max$()) * 100"
     ></div>

@@ -28,6 +28,17 @@ export class ExcelService {
 
     const toReturn: string[][] = [];
 
+    const timestamps: { timestamp: string; value: string }[] = [];
+    const egmf: { timestamp: string; value: string }[] = [];
+    const enginePercentTorque: { timestamp: string; value: string }[] = [];
+    const engineSpeedRPM: { timestamp: string; value: string }[] = [];
+    const airFilterDelta: { timestamp: string; value: string }[] = [];
+    const airLoadPercent: { timestamp: string; value: string }[] = [];
+    const airRuleHours: { timestamp: string; value: string }[] = [];
+    const cellularSignal: { timestamp: string; value: string }[] = [];
+    const engineTorque: { timestamp: string; value: string }[] = [];
+    const fuelFlowRate: { timestamp: string; value: string }[] = [];
+
     for (let header = 1; header <= headers.length; header++) {
       toReturn.push([]);
 
@@ -40,7 +51,16 @@ export class ExcelService {
       }
     }
 
-    console.log(toReturn);
+    console.log(toReturn[0].filter((x) => x).length);
+    console.log(toReturn[1].filter((x) => x).length);
+    console.log(toReturn[2].filter((x) => x).length);
+    console.log(toReturn[3].filter((x) => x).length);
+    console.log(toReturn[4].filter((x) => x).length);
+    console.log(toReturn[5].filter((x) => x).length);
+    console.log(toReturn[6].filter((x) => x).length);
+    console.log(toReturn[7].filter((x) => x).length);
+    console.log(toReturn[8].filter((x) => x).length);
+    console.log(toReturn[9].filter((x) => x).length);
     return {
       timestamps: toReturn[0],
       egmf: toReturn[1],

@@ -180,18 +180,18 @@
   </div>
   <div class="bg-[#00695c]">
     <div
-      class="w-20 h-20 flex justify-center items-center text-white text-center font-bold text-xl"
+      class="w-60 h-20 flex justify-center items-center text-white text-center font-bold text-xl"
     >
       CLAAS Solution
     </div>
-    <div class="w-20 h-20">
-      <app-glow-button [color$]="'green'" [active$]="true" />
+    <div class="w-full h-24">
+      <app-glow-button [color$]="'green'" [active$]="claasActive$().green" />
     </div>
-    <div class="w-20 h-20">
-      <app-glow-button [color$]="'yellow'" [active$]="false" />
+    <div class="w-full h-24">
+      <app-glow-button [color$]="'yellow'" [active$]="claasActive$().yellow" />
     </div>
-    <div class="w-20 h-20">
-      <app-glow-button [color$]="'red'" [active$]="false" />
+    <div class="w-full h-24">
+      <app-glow-button [color$]="'red'" [active$]="claasActive$().red" />
     </div>
   </div>
 </div>
