@@ -1,0 +1,35 @@
+@if(horizontal$()) {
+<div class="flex flex-col">
+  <h2 class="text-center text-4xl text-gray-600">
+    {{ (value$() / max$()) * 100 | number : "1.0-0" }}{{ unit$() }}
+  </h2>
+
+  <div class="w-full h-10 border bg-[#eaeaea] relative rounded-sm">
+    <div
+      class="absolute left-0 h-full transition-all ease-in-out duration-1000"
+      [style.background]="dynamicColor$() ? color$() : '#00695C'"
+      [style.width.%]="value$()"
+    ></div>
+  </div>
+  <div class="flex justify-between">
+    <h2 class="w-10 flex justify-center text-gray-600 text-xl">{{ 0 }}</h2>
+    <h2 class="w-10 flex justify-center text-gray-600 text-xl">
+      {{ max$() | number : "1.0-0" }}
+    </h2>
+  </div>
+</div>
+} @else {
+<div class="h-full flex flex-col gap-2 items-center">
+  <h2 class="text-center text-4xl text-gray-600">
+    {{ value$() | number : "1.0-0" }}{{ unit$() }}
+  </h2>
+  <div class="h-full w-10 border bg-[#eaeaea] relative rounded-sm">
+    <div
+      class="absolute bottom-0 w-full transition-all ease-in-out duration-1000"
+      [style.background]="dynamicColor$() ? color$() : '#00695C'"
+      [style.height.%]="(value$() / max$()) * 100"
+    ></div>
+    <div class="absolute top-0 left-0 w-10 h-10"></div>
+  </div>
+</div>
+}

@@ -1,0 +1,168 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+@use "sass:map";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #00201b,
+    20: #003730,
+    25: #00443b,
+    30: #005046,
+    35: #005d52,
+    40: #046b5e,
+    50: #2f8476,
+    60: #4d9e90,
+    70: #68b9aa,
+    80: #84d5c5,
+    90: #a0f2e1,
+    95: #b5ffef,
+    98: #e5fff8,
+    99: #f3fffa,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #02201b,
+    20: #183530,
+    25: #24413b,
+    30: #2f4c46,
+    35: #3b5852,
+    40: #47645e,
+    50: #5f7d76,
+    60: #799790,
+    70: #93b2aa,
+    80: #aecdc5,
+    90: #c9e9e1,
+    95: #d7f8ef,
+    98: #e5fff8,
+    99: #f3fffa,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #230f45,
+    20: #39265b,
+    25: #443167,
+    30: #503d73,
+    35: #5c4880,
+    40: #68548c,
+    50: #826da7,
+    60: #9c86c2,
+    70: #b7a1de,
+    80: #d3bcfb,
+    90: #ebdcff,
+    95: #f7edff,
+    98: #fef7ff,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    10: #181c1b,
+    20: #2d3130,
+    25: #383c3b,
+    30: #434846,
+    35: #4f5352,
+    40: #5b5f5e,
+    50: #747876,
+    60: #8e9290,
+    70: #a8acaa,
+    80: #c4c7c5,
+    90: #e0e3e1,
+    95: #eef1ef,
+    98: #f7faf8,
+    99: #fafdfa,
+    100: #ffffff,
+    4: #0b0f0e,
+    6: #101413,
+    12: #1c201f,
+    17: #272b2a,
+    22: #313634,
+    24: #363a39,
+    87: #d7dbd8,
+    92: #e5e9e6,
+    94: #ebefec,
+    96: #f1f4f2,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #141d1b,
+    20: #283230,
+    25: #333e3b,
+    30: #3e4946,
+    35: #4a5552,
+    40: #56615e,
+    50: #6e7976,
+    60: #889390,
+    70: #a2aeaa,
+    80: #bec9c5,
+    90: #dae5e1,
+    95: #e8f3ef,
+    98: #f1fcf8,
+    99: #f3fffa,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #ba1a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes, neutral-variant),
+  error: map.get($_palettes, error),
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+// Define the theme object.
+$graphs-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $_primary,
+      tertiary: mat.$blue-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($graphs-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($graphs-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($graphs-theme);

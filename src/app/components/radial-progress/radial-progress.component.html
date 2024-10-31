@@ -1,0 +1,29 @@
+<div class="relative">
+  <round-progress
+    [current]="value$()"
+    [max]="max$()"
+    [color]="'#00695C'"
+    [background]="'#eaeaea'"
+    [radius]="125"
+    [stroke]="40"
+    [semicircle]="half$()"
+    [rounded]="true"
+    [responsive]="false"
+    [duration]="1000"
+    [animationDelay]="0"
+  />
+  <div class="flex justify-between">
+    <h2 class="w-10 flex justify-center text-gray-600 text-xl">{{ 0 }}</h2>
+    <h2 class="w-10 flex justify-center text-gray-600 text-xl">
+      {{ max$() | number : "1.0-0" }}
+    </h2>
+  </div>
+  <div
+    class="absolute left-0 bottom-0 right-0 flex flex-col justify-center items-center"
+  >
+    <h2 class="text-6xl text-gray-600">
+      {{ value$() | number : "1.0-0" }}
+    </h2>
+    <h2 class="text-gray-600">{{ unit$() }}</h2>
+  </div>
+</div>

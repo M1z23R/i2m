@@ -1,0 +1,197 @@
+<div class="grid grid-cols-[1fr_auto] h-full">
+  <div class="grid grid-rows-[auto_1fr] h-full">
+    <div class="h-20 p-4 bg-[#00695c] flex justify-between items-center">
+      <div>
+        @if(startTimestamp$() && endTimestamp$()) {
+        <h1 class="text-2xl text-white">
+          Period {{ startTimestamp$() }} - {{ endTimestamp$() }}
+        </h1>
+        }
+      </div>
+
+      <button mat-raised-button [color]="'red'" (click)="fileInput.click()">
+        Import
+        <input type="file" hidden (change)="onFileChange($event)" #fileInput />
+      </button>
+    </div>
+    <!-- content -->
+
+    <div class="h-full">
+      <div
+        class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grzzid-cols-3 xl:grid-cols-4 gap-4"
+      >
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Cellular Signal</h2>
+          <div class="h-full flex justify-center">
+            <app-progress-bar
+              [value$]="currentCellularSignal$()"
+              [max$]="cellularSignalMax$()"
+              [unit$]="''"
+            ></app-progress-bar>
+          </div>
+        </div>
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Air Filter Load Percent</h2>
+          <div class="flex justify-center">
+            <app-radial-progress
+              [half$]="true"
+              [max$]="airLoadPercentMax$()"
+              [value$]="currentAirLoadPercent$()"
+              [unit$]="'%'"
+            ></app-radial-progress>
+          </div>
+        </div>
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Air Filter RUL</h2>
+          <div class="h-full flex justify-center">
+            <app-progress-bar
+              [value$]="currentAirRuleHours$()"
+              [max$]="airRuleHoursMax$()"
+              [unit$]="'hr'"
+            ></app-progress-bar>
+          </div>
+        </div>
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Air Filter Differential pressure</h2>
+
+          <app-progress-bar
+            [horizontal$]="true"
+            [value$]="currentAirFilterDelta$()"
+            [max$]="airFilterDeltaMax$()"
+            [unit$]="' mbar'"
+            [dynamicColor$]="true"
+          ></app-progress-bar>
+        </div>
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Engine Speed (RPM)</h2>
+          <div class="flex justify-center">
+            <app-radial-progress
+              [half$]="true"
+              [max$]="engineSpeedRPMMax$()"
+              [value$]="currentEngineSpeedRPM$()"
+              [unit$]="'RPM'"
+            ></app-radial-progress>
+          </div>
+        </div>
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Fuel Rate (L/h)</h2>
+          <div class="flex justify-center">
+            <app-radial-progress
+              [half$]="true"
+              [max$]="fuelFlowRateMax$()"
+              [value$]="currentFuelFlowRate$()"
+              [unit$]="'L/h'"
+            ></app-radial-progress>
+          </div>
+        </div>
+
+        <!-- exhaust gas -->
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Exhaust Gas Mass Flow</h2>
+          <div class="flex justify-center">
+            <app-radial-progress
+              [half$]="true"
+              [max$]="egmfMax$()"
+              [value$]="currentEgmf$()"
+              [unit$]="'kg/h'"
+            ></app-radial-progress>
+          </div>
+        </div>
+
+        <!-- Engine percent torque -->
+
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl"
+        >
+          <h2 class="text-center">Engine Percent Torque</h2>
+          <div class="flex justify-center">
+            <app-radial-progress
+              [half$]="true"
+              [max$]="enginePercentTorqueMax$()"
+              [value$]="currentEnginePercentTorque$()"
+              [unit$]="'%'"
+            ></app-radial-progress>
+          </div>
+        </div>
+        <div
+          class="border rounded-md p-4 flex flex-col justify-center gap-4 shadow-xl col-span-1"
+        >
+          <h2 class="text-center">Air Filter RUL</h2>
+          <div class="flex justify-center">
+            @if(timestamps$().length > 0) {
+            <google-chart
+              [style.width.%]="100"
+              [type]="chartType"
+              [data]="airRuleHoursRows$()"
+              [columns]="['Time', 'Air RUL']"
+              [options]="{
+                displayZoomButtons: false,
+                displayRangeSelector: false
+              }"
+            >
+            </google-chart>
+
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col w-full justify-center items-center">
+        <div class="w-96">
+          <mat-slider [min]="0" [max]="timestamps$().length - 1">
+            <input
+              matSliderThumb
+              [value]="currentTimestampIndex$()"
+              (change)="onTrackChange($event)"
+            />
+          </mat-slider>
+        </div>
+        <div class="flex justify-center">
+          {{ currentTimestamp$() }}
+        </div>
+        <div class="flex justify-center">
+          @if(!isPlaying$()){
+          <button (click)="isPlaying$.set(true)" mat-flat-button>Play</button>
+          } @else {
+          <button (click)="isPlaying$.set(false)" mat-flat-button>Stop</button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-[#00695c]">
+    <div
+      class="w-20 h-20 flex justify-center items-center text-white text-center font-bold text-xl"
+    >
+      CLAAS Solution
+    </div>
+    <div class="w-20 h-20">
+      <app-glow-button [color$]="'green'" [active$]="true" />
+    </div>
+    <div class="w-20 h-20">
+      <app-glow-button [color$]="'yellow'" [active$]="false" />
+    </div>
+    <div class="w-20 h-20">
+      <app-glow-button [color$]="'red'" [active$]="false" />
+    </div>
+  </div>
+</div>
